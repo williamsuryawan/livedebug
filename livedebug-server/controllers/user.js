@@ -8,9 +8,10 @@ class UserController {
       email: req.body.email,
       password: req.body.password
     };
-
+    
     User.create(user)
     .then(user => {
+      // console.log("masuk sini 1 ==", user)
       res.status(201).json(user);
     })
     .catch(err => {
@@ -25,17 +26,21 @@ class UserController {
   }
 
   static login(req, res) {
+    // console.log("masuk 1 ===", req.body)
     User
-     .findOne(req.body.email)
+     .findOne({email: req.body.email})
      .then(user => {
+      // console.log("masuk 2 ===", user)
        if (user) {
+        // console.log("masuk 3 ===", regis.checkPassword(req.body.password, user.password))
          if (regis.checkPassword(req.body.password, user.password)) {
            let signUser = {
               id: user._id,
               email: user.email
            };
-
+          //  console.log("masuk 4 ===",signUser)
            let token = jwt.sign(signUser);
+          //  console.log("masuk 5 ===",token)
            res.status(200).json({
              token: token,
              _id: user._id,
@@ -58,7 +63,9 @@ class UserController {
        verificationCode: req.body.verificationCode
      }, {
        $set: { isVerified: true }
-     })
+     }, {
+      new: true
+    })
      .then(user => {
        if(user) {
          res.status(200).json(user);

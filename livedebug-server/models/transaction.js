@@ -21,12 +21,15 @@ const transactionSchema = new Schema({
 })
 
 transactionSchema.pre('save', function(next) {
+  console.log("masuk pre transaction 1===", this.from, this.amount)
   Account.findOne({
     _id: this.from,
-    balance: { $lte: Number(this.amount)  }
+    balance: { $gte: Number(this.amount)  }
   })
   .then(updated => {
+    console.log("masuk pre transaction 2===", updated)
     if (updated) {
+      console.log("masuk pre transaction 3===")
       updated.balance -= this.amount;
       updated.save();
     } else {
@@ -36,6 +39,7 @@ transactionSchema.pre('save', function(next) {
     }
   })
   .then(updated => {
+    console.log("masuk pre transaction 4===", updated)
     return Account.findOne({
       _id: this.to
     })
@@ -43,7 +47,7 @@ transactionSchema.pre('save', function(next) {
   .then(updated => {
     updated.balance += this.amount;
     updated.save();
-
+    console.log("masuk pre transaction 5===", updated)
     next();
   })
   .catch(err => {

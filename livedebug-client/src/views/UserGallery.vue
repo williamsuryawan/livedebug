@@ -50,6 +50,7 @@ export default {
     },
 
     addTomyFavorite (index) {
+      console.log("masuk addTomyFavorite", index)
       this.addedIndex.push(index)
       this.$emit('myFavorite', this.projects[index])
     }
@@ -57,7 +58,8 @@ export default {
 
   computed: {
     user () {
-      return this.store.state.projects.user
+      console.log(this.$store.state.projects)
+      return this.$store.state.projects.user
     },
 
     projects () {
@@ -68,16 +70,15 @@ export default {
   watch: {
     $route (newVal) {
       this.isLoading = true
-      this.fetchProject(newVal.params.behanceId).then(
-        _ => (this.isLoading = false)
-      )
+      this.fetchProject(newVal.params.behanceId)
+      this.isLoading = false
     }
   },
 
   mounted () {
-    this.fetchProject(this.$route.params.behanceId).then(
-      _ => (this.isLoading = false)
-    )
+    this.fetchProject(this.$route.params.behanceId)
+    this.isLoading = false
+    
   }
 }
 </script>

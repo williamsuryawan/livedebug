@@ -75,7 +75,7 @@ import Gallery from '@/components/Gallery.vue'
 
 export default {
   data () {
-    const returnData = {
+    return {
       search: '',
       loading: false
     }

@@ -12,13 +12,13 @@ const accountSchema = new Schema({
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user'
+    ref: 'User'
   }
 })
 
 accountSchema.pre('save', function(next) {
   this.accountNumber = String(Math.random()).substring(2,12);
-
+  next();
 })
 
 let Account = mongoose.model('Account', accountSchema);

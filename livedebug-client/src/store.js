@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from './helpers/axios'
 
+Vue.use(Vuex);
+
 export default new Vuex.Store({
   state: {
     users: '',
@@ -33,13 +35,15 @@ export default new Vuex.Store({
   actions: {
     fetchUsers (context) {
       return axios.get('/users').then(({ data }) => {
+        console.log("fetch user berhasil", data)
         context.commit('setUsers', data)
       })
     },
 
     fetchProject (context, id) {
       return axios.get(`/projects/${id}`).then(({ data }) => {
-        context.commit('setProjects', { data })
+        console.log("fetch project berhasil", data)
+        context.commit('setProjects', data)
       })
     },
 

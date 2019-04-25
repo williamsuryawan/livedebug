@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <navigation :counter="this.favorites.length"/>
-    <router-view :myFavorite="myFavorite" @favorites="favorites"/>
+    <router-view v-on:myFavorite="myFavorite" @favorites="favorites"/>
   </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
 
   method: {
     myFavorite (data) {
+      console.log("masuk myFavorite method di app", data)
       this.favorites = this.favorites.concat(data)
     }
   }

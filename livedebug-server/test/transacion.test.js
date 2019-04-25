@@ -83,7 +83,7 @@ describe('Transactions', function() {
 
   describe('POST /transactions', function() {
 
-    it.only('should return status code 201 and create transactions', function(done) {
+    it('should return status code 201 and create transactions', function(done) {
       chai
        .request(app)
        .post('/transactions')
